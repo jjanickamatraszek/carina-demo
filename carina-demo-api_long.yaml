@@ -1,0 +1,18 @@
+version: '3'
+services:
+  app:
+    image: adoptopenjdk/openjdk11
+    environment:
+      - "SUITE=api"
+    command:
+      - /bin/bash
+      - -c
+      - |
+        apt-get update 
+        apt-get install -y maven 
+        cd carina-demo 
+        mvn test -Dsuite=$${SUITE}
+    volumes:
+      - "./src:/carina-demo/src:ro"
+      - "./pom.xml:/carina-demo/pom.xml:ro"
+      - "./target:/carina-demo/target"
